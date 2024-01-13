@@ -1,0 +1,67 @@
+<!-- myapp/templates/myapp/add_post.html -->
+{% extends 'myapp/base.html' %}
+
+{% block title %}Add Post{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="mt-4 mb-4">Add New Post</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="postType">Type</label>
+                <select class="form-control" id="postType" name="postType" required>
+                    {% for post_type in post_types %}
+                        <option value="{{ post_type.id }}">{{ post_type.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="postType">the project</label>
+                <select class="form-control" id="postProject" name="postProject" >
+                    {% for post_project in post_projects %}
+                        <option value="{{ post_project.id }}">{{ post_project.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="postSubject">Subject</label>
+                <input type="text" class="form-control" id="postSubject" name="postSubject" required>
+            </div>
+            <div class="form-group">
+                <label for="postContent">Content</label>
+                <textarea class="form-control" id="postContent" name="postContent" rows="4" required></textarea>
+            </div>
+             <div class="form-group">
+                <label for="postImages">Images</label>
+                <input type="file" class="form-control-file" id="postImages" name="postImages[]" multiple required>
+                <small class="form-text text-muted">You can select multiple images by holding down the Ctrl key (Windows) or Command key (Mac).</small>
+            </div>
+
+            <div id="additionalImageFields"></div>
+            <button type="button" class="btn btn-secondary mb-2" onclick="addImageField()">Add Another Image</button>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function addImageField() {
+            var container = document.getElementById('additionalImageFields');
+            var input = document.createElement('div');
+            input.className = 'input-group mt-2';
+            input.innerHTML = `
+                <input type="file" class="form-control-file" name="postImages[]">
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-danger" onclick="removeImageField(this)">Delete</button>
+                </div>
+            `;
+            container.appendChild(input);
+        }
+
+        function removeImageField(button) {
+            var container = document.getElementById('additionalImageFields');
+            container.removeChild(button.parentNode.parentNode);
+        }
+    </script>
+{% endblock %}
