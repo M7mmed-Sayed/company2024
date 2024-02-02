@@ -117,7 +117,7 @@ This Django project is designed to manage posts / documents for a company. It in
 ![Add Post](Screenshots/login.PNG)
 
 ### Add Post
-![Add Post](Screenshots/add Post.PNG)
+![Add Post](Screenshots/addpost.PNG)
 
 ### Home
 ![Home](Screenshots/home.PNG)
